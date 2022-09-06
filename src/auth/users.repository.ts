@@ -22,7 +22,10 @@ export class UsersRepository {
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    const user = this.userEntityRepository.create({ username, password });
+    const user = this.userEntityRepository.create({
+      username,
+      password: hashedPassword,
+    });
 
     try {
       await this.userEntityRepository.save(user);
@@ -32,5 +35,15 @@ export class UsersRepository {
       }
       throw new InternalServerErrorException();
     }
+  }
+
+  async findUserByName(username: string): Promise<User> {
+    const usernameFound = await this.userEntityRepository.findOneBy({
+      username,
+    });
+    if (!usernameFound) {
+      throw new NotFoundException(`The "${usernameFound}" is not found`);
+    }
+    return usernameFound;
   }
 }
