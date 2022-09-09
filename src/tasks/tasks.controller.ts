@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
@@ -21,10 +22,16 @@ import { GetUser } from 'src/auth/get-user.decorators';
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+  private logger = new Logger('TasksController');
   constructor(private taskService: TasksService) {}
 
   @Get()
   getTasks(@Query() filterDto: GetTasksFilterDto, user: User): Promise<Task[]> {
+    this.logger.verbose(
+      `User "${user.username}" retieving all tasks. Filters: ${JSON.stringify(
+        filterDto,
+      )})}`,
+    );
     return this.taskService.getTasks(filterDto, user);
   }
 
