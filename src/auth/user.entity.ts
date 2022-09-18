@@ -1,4 +1,4 @@
-import { Task } from 'src/tasks/dto/task.entity';
+import { Task } from '../tasks/dto/task.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity()
