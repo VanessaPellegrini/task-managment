@@ -33,7 +33,7 @@ describe('TasksService', () => {
   });
 
   describe('getTasks', () => {
-    it('calls TasksRepository.getTasks and returns the result', async () => {
+    it('Should calls TasksRepository.findAll then returns the result', async () => {
       tasksRepository.findAll.mockResolvedValue('someValue');
       const result = await tasksService.getTasks(null, mockUser);
       expect(result).toEqual('someValue');
@@ -41,7 +41,7 @@ describe('TasksService', () => {
   });
 
   describe('getTaskById', () => {
-    it('calls TasksRepository.findOne and returns the result', async () => {
+    it('Should calls TasksRepository.findById then returns the result', async () => {
       const mockTask = {
         title: 'Test title',
         description: 'Test desc',
@@ -52,13 +52,6 @@ describe('TasksService', () => {
       tasksRepository.findById.mockResolvedValue(mockTask);
       const result = await tasksService.getTaskById('someId', mockUser);
       expect(result).toEqual(mockTask);
-    });
-
-    it('calls TasksRepository.findOne and handles an error', async () => {
-      tasksRepository.findById.mockResolvedValue(null);
-      expect(tasksService.getTaskById('someId', mockUser)).rejects.toThrow(
-        NotFoundException,
-      );
     });
   });
 });

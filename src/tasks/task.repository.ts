@@ -12,6 +12,7 @@ import { TaskStatus } from './task-status.enum';
 import { Task } from './dto/task.entity';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { User } from 'src/auth/user.entity';
+import { log } from 'console';
 
 @Injectable()
 export class TaskRepository {
@@ -28,7 +29,6 @@ export class TaskRepository {
     if (!found) {
       throw new NotFoundException(`Task with ID "${id}" not found`);
     }
-
     return found;
   }
 
